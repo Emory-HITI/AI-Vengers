@@ -1,9 +1,11 @@
 ## Heading
 
-| Model          | Description  | Data Used    | GitHub Link  | Docker Image |
-| :------------- | :----------: | -----------: | -----------: | -----------: |
-|  Cell Contents | More Stuff   | And Again    | And Again    | And Again    |
-| You Can Also   | Put Pipes In | Like this \| | And Again    | And Again    |
+| Model          | Description    | Data Used    | GitHub Link  | Docker Image |
+| :------------: | :------------: | -----------: | -----------: | -----------: |
+| ResNet34       | Race Detection | MIMIC        | [link](https://github.com/blackboxradiology/AI-Vengers/tree/brandon-branch)     | [link](https://hub.docker.com/r/blackboxradiology/tf-2.6b)      |
+| ResNet34       | Race Detection | CheXpert      | [link](https://github.com/blackboxradiology/AI-Vengers/tree/brandon-branch)     | [link](https://hub.docker.com/r/blackboxradiology/tf-2.6b)      |
+|  Cell Contents | More Stuff     | And Again    | And Again    | And Again    |
+| You Can Also   | Put Pipes In   | Like this \| | And Again    | And Again    |
 
 
 You can use the [editor on GitHub](https://github.com/Emory-HITI/AI-Vengers/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
