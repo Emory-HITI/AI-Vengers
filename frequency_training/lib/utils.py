@@ -30,14 +30,14 @@ class EarlyStopping:
             self.best_score = score
             self.step = step
             self.counter = 0
-            
-def save_model(state_dict, path):
-    torch.save(state_dict, path)      
 
-def save_checkpoint(model, optimizer, scheduler, sampler_dict, start_step, es, rng):   
-    slurm_job_id = os.environ.get('SLURM_JOB_ID')        
-    
-    if slurm_job_id is not None and Path('/checkpoint/').exists():        
+def save_model(state_dict, path):
+    torch.save(state_dict, path)
+
+def save_checkpoint(model, optimizer, scheduler, sampler_dict, start_step, es, rng):
+    slurm_job_id = os.environ.get('SLURM_JOB_ID')
+
+    if slurm_job_id is not None and Path('/checkpoint/').exists():
         torch.save({'model_dict': model.state_dict(),
                     'optimizer_dict': optimizer.state_dict(),
                     'scheduler_dict': scheduler.state_dict(),
@@ -45,31 +45,31 @@ def save_checkpoint(model, optimizer, scheduler, sampler_dict, start_step, es, r
                     'start_step': start_step,
                     'es': es,
                     'rng': rng
-        } 
-                   , 
-                   Path(f'/checkpoint/{getpass.getuser()}/{slurm_job_id}/chkpt').open('wb')                  
+        }
+                   ,
+                   Path(f'/checkpoint/{getpass.getuser()}/{slurm_job_id}/chkpt').open('wb')
                   )
-        
-        
+
+
 def has_checkpoint():
     slurm_job_id = os.environ.get('SLURM_JOB_ID')
     if slurm_job_id is not None and Path(f'/checkpoint/{getpass.getuser()}/{slurm_job_id}/chkpt').exists():
         return True
-    return False       
+    return False
 
 
-def load_checkpoint():   
+def load_checkpoint():
     slurm_job_id = os.environ.get('SLURM_JOB_ID')
     if slurm_job_id is not None and Path('/checkpoint/').exists():
         return torch.load(f'/checkpoint/{getpass.getuser()}/{slurm_job_id}/chkpt')
-    
-def delete_checkpoint():   
+
+def delete_checkpoint():
     slurm_job_id = os.environ.get('SLURM_JOB_ID')
     chkpt_file = Path(f'/checkpoint/{getpass.getuser()}/{slurm_job_id}/chkpt')
     if slurm_job_id is not None and chkpt_file.exists():
-        return chkpt_file.unlink()   
-            
-def fft(img):    
+        return chkpt_file.unlink()
+
+def fft(img):
     assert(img.ndim == 2)
     img_c2 = np.fft.fft2(img)
     img_c3 = np.fft.fftshift(img_c2)
@@ -105,12 +105,12 @@ def random_attack(image, epsilon):
 def split_tensor(tensor, tile_size=256, offset=256):
     tiles = []
     h, w = tensor.size(1), tensor.size(2)
-    for y in range(int(math.ceil(h/offset))):
-         for x in range(int(math.ceil(w/offset))):
+    for y in range(int(math.floor(h/offset))):
+         for x in range(int(math.floor(w/offset))):
              tiles.append(tensor[:, offset*y:min(offset*y+tile_size, h), offset*x:min(offset*x+tile_size, w)])
     if tensor.is_cuda:
          base_tensor = torch.zeros(tensor.size(), device=tensor.get_device())
-    else: 
+    else:
          base_tensor = torch.zeros(tensor.size())
     return tiles, base_tensor
 
@@ -122,4 +122,4 @@ def blacken_tensor(tensor, patch_ind, tile_size=256, offset=256):
             if c == patch_ind:
                 tensor[:, offset*y:min(offset*y+tile_size, h), offset*x:min(offset*x+tile_size, w)] = 0
             c += 1
-    return tensor      
+    return tensor
