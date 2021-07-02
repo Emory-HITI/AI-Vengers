@@ -16,12 +16,11 @@ The training data folder has training code for all the experiments. The experime
 | CXR_training         | MIMIC_resnet34_race_detection_2021_06_29.ipynb     | MIMIC              | Resnet34    |
 | EM-CS_training       | Emory_C-spine_race_detection_2021_06_29.ipynb      | Emory Cervical Spine | Resnet34  |
 | EM_Mammo_Training    | training code.ipynb                                | Mammogram          | EfficientNetB2 |
-| Densenet121_CXR_Training | Lung_segmentation_MIMIC.ipynb                  | MIMIC              |             |
+| Densenet121_CXR_Training | Lung_segmentation_MIMIC.ipynb                  | MIMIC              | U-Net       |
 | Densenet121_CXR_Training | Race classification with No Finding label only_MIMIC_Densenet121.ipynb | MIMIC | DenseNet121 |
 | Densenet121_CXR_Training | Race classification_MIMIC_Densenet121.ipynb    | MIMIC              | DenseNet121 |
 | Densenet121_CXR_Training | Race_classification_Emory_Densenet121.ipynb    | Emory CXR          | DenseNet121 |
 | digital_hand_atlas   | dha_2_classes.ipynb                                | Digital Hand Atlas | ResNet50    |
-| frequency_training   |                                                    |                    |             |
 
 The final ipython-notebook — bias_pred.ipynb has validation code for all the above training models (except frequency training).
 
