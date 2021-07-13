@@ -9,12 +9,12 @@ from torchvision import transforms
 import pickle
 from pathlib import Path
 from torch.utils.data import Dataset, ConcatDataset
-from lib.utils import fft, filter_and_ifft, draw_circle, random_attack, split_tensor, blacken_tensor
+from lib.utils import fft, filter_and_ifft, draw_circle, split_tensor, blacken_tensor
 import math
 
 
 def get_dataset(envs = [], split = None, only_frontal = False, imagenet_norm = True, augment = 0, cache = True, subset_label = None,
-               augmented_dfs = None,  output_type = 'normal', ifft_filter = None, add_noise = False,
+               augmented_dfs = None,  output_type = 'normal', ifft_filter = None, 
                     pixel_thres = None, crop_patch_at_end = False, patched = 'none', patch_ind = None):
           
     if augment == 1: # normal image augmentation
@@ -50,7 +50,7 @@ def get_dataset(envs = [], split = None, only_frontal = False, imagenet_norm = T
             cache_dir.mkdir(parents=True, exist_ok=True)
             datasets.append(AllDatasetsShared(dfs[c], transform = transforms.Compose(image_transforms)
                                       , split = split, cache = cache, cache_dir = cache_dir, subset_label = subset_label, output_type = output_type,
-                                      ifft_filter = ifft_filter, add_noise = add_noise, pixel_thres = pixel_thres, crop_patch_at_end = crop_patch_at_end,
+                                      ifft_filter = ifft_filter, pixel_thres = pixel_thres, crop_patch_at_end = crop_patch_at_end,
                                       patched = patched, patch_ind = patch_ind)) 
                 
     if len(datasets) == 0:
@@ -65,7 +65,7 @@ def get_dataset(envs = [], split = None, only_frontal = False, imagenet_norm = T
 
 class AllDatasetsShared(Dataset):
     def __init__(self, dataframe, transform=None, split = None, cache = True, cache_dir = '', subset_label = None, output_type = 'normal', ifft_filter = None,
-                    add_noise = False, pixel_thres = None, crop_patch_at_end = False, patched = 'none', patch_ind = None):
+                 pixel_thres = None, crop_patch_at_end = False, patched = 'none', patch_ind = None):
         super().__init__()
         self.dataframe = dataframe
         self.dataset_size = self.dataframe.shape[0]
@@ -79,7 +79,6 @@ class AllDatasetsShared(Dataset):
             self.ifft_filter = ifft_filter[:2]
         else:
             self.ifft_filter = ifft_filter
-        self.add_noise = add_noise
         self.pixel_thres = pixel_thres
         self.crop_patch_at_end = crop_patch_at_end
         self.patched = patched
@@ -161,10 +160,6 @@ class AllDatasetsShared(Dataset):
                 label = meta['insurance']
             else:
                 raise NotImplementedError
-
-        if self.add_noise: # add gaussian noise
-            epsilon = 0.25 
-            _, img = random_attack(img, epsilon)
 
         if self.output_type == 'fft':
             img = img[0, :, :].float().numpy()

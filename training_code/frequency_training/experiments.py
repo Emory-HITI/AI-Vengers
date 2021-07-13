@@ -1,5 +1,6 @@
 import numpy as np
 import Constants
+import os
     
 def combinations(grid):
     keys = list(grid.keys())
@@ -80,6 +81,58 @@ class Normal():
             'model': ['densenet', 'vision_transformer'],
             'pixel_thres': [1.0, 0.6],
             'augment': [True, False]
+        }
+        return combinations(grid)
+
+class NormalMIMIC():
+    fname = 'train_model.py'
+    @staticmethod
+    def hparams():
+        grid = {
+            'domain': ['MIMIC'],
+            'use_pretrained': [True],
+            'seed': [0],
+            'target': ['race', 'gender', 'Pneumonia'],
+            'data_type': ['normal'],
+            'model': ['densenet'],
+            'pixel_thres': [1.0],
+            'augment': [True, False]
+        }
+        return combinations(grid)
+        
+class RepresentationNormalMIMIC():
+    fname = 'train_representation.py'
+    @staticmethod
+    def hparams():
+        grid = {
+            'domain': ['MIMIC'],
+            'use_pretrained': [True],
+            'seed': [0],
+            'target': ['race', 'gender', 'Pneumonia'],
+            'data_type': ['normal'],
+            'embed_dim': [128],
+            'model': ['densenet'],
+            'pixel_thres': [1.0],
+            'augment': [True, False],
+            'epochs': [15]
+        }
+        return combinations(grid)
+
+class PerturbMIMIC():
+    fname = 'perturb.py'
+    @staticmethod
+    def hparams():
+        grid = {
+            'domain': ['MIMIC'],
+            'plabel': ['race'],
+            'use_pretrained': [True],
+            'attack': ['fgsm', 'random'],
+            'input_dir': ['/scratch/hdd001/home/{}/projects/CXR_Bias/output/NormalMIMIC/'.format(os.environ.get('USER'))],
+            'seed': [0],
+            'data_type': ['normal'],
+            'model': ['densenet'],
+            'pixel_thres': [1.0],
+            'augment': [False]
         }
         return combinations(grid)
 
