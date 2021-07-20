@@ -8,3 +8,4 @@ scikit-learn==0.24.1
 scikit-image==0.17.2
 Pillow==8.1.0
 matplotlib==2.2.2
+pytorch_metric_learning==0.9.98

@@ -95,13 +95,6 @@ def draw_circle(shape,diameter):
 def filter_and_ifft(x, filter):
     return np.real_if_close(np.fft.ifft2(np.fft.ifftshift(filter_circle(filter, x))))
 
-def random_attack(image, epsilon):
-    noise = torch.normal(mean=0., std=epsilon, size=image.shape)
-    perturbed_image = image + noise
-    perturbed_image = torch.clamp(perturbed_image, 0, 1)
-    # Return the perturbed image
-    return noise, perturbed_image
-
 def split_tensor(tensor, tile_size=256, offset=256):
     tiles = []
     h, w = tensor.size(1), tensor.size(2)
