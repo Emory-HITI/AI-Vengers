@@ -1,3 +1,7 @@
+[![Contributors][contributors-shield]][contributors-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+
 # AI-Vengers
 
 This GitHub repository holds training and validation code for Deep Learning and Machine Learning models to detect racial demographics of patients through the use of medical images.
@@ -31,3 +35,11 @@ To run the validation code -
 4. Change the model path in the validation code and the corresponding function.
 
 https://emory-hiti.github.io/AI-Vengers/
+
+
+[contributors-shield]: https://img.shields.io/github/contributors/SPARC-FAIR-Codeathon/KnowMore.svg?style=flat-square
+[contributors-url]: https://github.com/SPARC-FAIR-Codeathon/KnowMore/graphs/contributors
+[stars-shield]: https://img.shields.io/github/stars/SPARC-FAIR-Codeathon/KnowMore.svg?style=flat-square
+[stars-url]: https://github.com/SPARC-FAIR-Codeathon/KnowMore/stargazers
+[issues-shield]: https://img.shields.io/github/issues/SPARC-FAIR-Codeathon/KnowMore.svg?style=flat-square
+[issues-url]: https://github.com/SPARC-FAIR-Codeathon/KnowMore/issues
